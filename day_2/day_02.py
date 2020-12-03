@@ -1,44 +1,65 @@
 #!/usr/bin/env python
 
 # Advent of Code
-# Day 1
+# Day 2
 # bill@billodwyer.xyz
 
-# Find the two entries in the list (input.csv) which sum to 2020 and then multiply them together
-import time
-startTime = time.time()
-# Create empty list and import data into it as integers
-expenses = []
-with open("day_01_input.csv", "r") as input:
+# Find the number of passwords in the list which are valid
+
+import re
+
+# Create empty list and import data
+passwords = []
+with open("input", "r") as input:
     for line in input.readlines():
-        expenses.append(int(line))
+        line = re.sub("\n","",line)     # strips newlines
+        line = re.split(":\s|\s",line)  # convert to 3-part list: numbers, letters, password
+        passwords.append(line)
         
-# Set target number, length of input list, and starting index i
-target = 2020
-length = len(expenses)
+# Part 1
+# Set variable for final output
+# valid_passwords = 0
 
-# Two numbers summing to target
-i = 0 
-while i < length:
-    for n in range(i+1, length):
-        if expenses[i] + expenses[n] == target:
-            print(expenses[i] * expenses[n])
-    i+=1
+# for password in passwords:
+#     # find actual numbers in entry and create min and max allowed amounts
+#     n = re.findall("\d{1,2}",password[0])
+#     n_min = int(n[0])
+#     n_max = int(n[1])
+#     # set the letter as l
+#     l = password[1]
+#     # set the password as p
+#     p = password[2]
 
-# Three numbers summing to target
-i = 0
-while i < length:
-    for n in range(i+1, length):
-        for m in range(n+1,length):
-            if expenses[i] + expenses[n] + expenses[m] == target:
-                print(expenses[i] * expenses[n] * expenses[m])
-    i+=1
+#     #if l is in p, and number of l is within n_min/n_max, increase valid_passwords by 1
+#     if l in p:
+#         if p.count(l) >= n_min and p.count(l) <= n_max:
+#             valid_passwords +=1
+
+# print(valid_passwords)
+
+# Part 2
+Set variable for final output
+valid_passwords = 0
+
+for password in passwords:
+    # find actual numbers in entry and create first and last positions
+    n = re.findall("\d{1,2}",password[0])
+    n_first = int(n[0]) - 1
+    n_last = int(n[1]) - 1
+    
+    
+    # set the letter as l
+    l = password[1]
+    
+    # set the password as p
+    p = password[2]
+    
+    if p[n_first] == l:
+        if p[n_last] != l:
+            valid_passwords +=1
+    if p[n_first] != l:
+        if p[n_last] == l:
+            valid_passwords +=1
 
 
-
-
-
-#####your python script#####
-
-executionTime = (time.time() - startTime)
-print('Execution time in seconds: ' + str(executionTime))
+print(valid_passwords)

@@ -5,11 +5,10 @@
 # bill@billodwyer.xyz
 
 # Find the two entries in the list (input.csv) which sum to 2020 and then multiply them together
-import time
-startTime = time.time()
+
 # Create empty list and import data into it as integers
 expenses = []
-with open("day_01_input.csv", "r") as input:
+with open("input", "r") as input:
     for line in input.readlines():
         expenses.append(int(line))
         
@@ -17,7 +16,7 @@ with open("day_01_input.csv", "r") as input:
 target = 2020
 length = len(expenses)
 
-# Two numbers summing to target
+# Part 1
 i = 0 
 while i < length:
     for n in range(i+1, length):
@@ -25,7 +24,7 @@ while i < length:
             print(expenses[i] * expenses[n])
     i+=1
 
-# Three numbers summing to target
+# Part 2
 i = 0
 while i < length:
     for n in range(i+1, length):
@@ -34,6 +33,3 @@ while i < length:
                 print(expenses[i] * expenses[n] * expenses[m])
     i+=1
 
-
-executionTime = (time.time() - startTime)
-print('Execution time in seconds: ' + str(executionTime))
